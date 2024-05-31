@@ -43,6 +43,7 @@ export default function RootLayout() {
             name="(user)"
             options={{ headerShown: false, title: "Menu" }}
           />
+          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
           <Stack.Screen name="cart" options={{ presentation: "modal" }} />
         </Stack>

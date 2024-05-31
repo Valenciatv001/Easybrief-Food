@@ -29,11 +29,13 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="orders"
         options={{
           title: "Orders",
+          headerShown: false,
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name="list" size={24} color={color} />
+            // <TabBarIcon name="list" size={24} color={color} />
+            <TabBarIcon name="book" size={24} color={color} />
           ),
         }}
       />
