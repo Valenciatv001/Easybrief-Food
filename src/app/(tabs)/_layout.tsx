@@ -3,6 +3,7 @@ import React from "react";
 
 import { useColorScheme } from "@/src/hooks/useColorScheme";
 import { TabBarIcon } from "@/src/components/navigation/TabBarIcon";
+import { FontAwesome } from "@expo/vector-icons";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 
 export default function TabLayout() {
@@ -15,27 +16,23 @@ export default function TabLayout() {
         headerShown: false,
       }}
     >
+      <Tabs.Screen name="index" options={{ href: null }} />
       <Tabs.Screen
-        name="index"
+        name="menu"
         options={{
-          title: "Home",
+          title: "Menu",
+          headerShown: false,
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "home" : "home-outline"}
-              color={color}
-            />
+            <FontAwesome name="cutlery" size={24} color={color} />
           ),
         }}
       />
       <Tabs.Screen
         name="explore"
         options={{
-          title: "Explore",
+          title: "Orders",
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "code-slash" : "code-slash-outline"}
-              color={color}
-            />
+            <TabBarIcon name="list" size={24} color={color} />
           ),
         }}
       />
