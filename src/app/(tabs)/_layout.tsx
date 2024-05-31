@@ -1,10 +1,11 @@
-import { Tabs } from "expo-router";
+import { Link, Tabs } from "expo-router";
 import React from "react";
 
 import { useColorScheme } from "@/src/hooks/useColorScheme";
 import { TabBarIcon } from "@/src/components/navigation/TabBarIcon";
 import { FontAwesome } from "@expo/vector-icons";
 import { Colors } from "react-native/Libraries/NewAppScreen";
+import { Pressable } from "react-native";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
