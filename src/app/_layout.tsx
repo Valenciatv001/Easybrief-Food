@@ -36,7 +36,11 @@ export default function RootLayout() {
       <CartProvider>
         <Stack>
           <Stack.Screen
-            name="(tabs)"
+            name="(admin)"
+            options={{ headerShown: false, title: "Menu" }}
+          />
+          <Stack.Screen
+            name="(user)"
             options={{ headerShown: false, title: "Menu" }}
           />
           <Stack.Screen name="+not-found" />

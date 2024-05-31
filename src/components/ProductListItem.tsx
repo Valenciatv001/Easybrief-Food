@@ -2,7 +2,7 @@ import products from "@/assets/data/products";
 import { Colors } from "@/src/constants/Colors";
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import { Product } from "../types";
-import { Link, router } from "expo-router";
+import { Link, router, useSegments } from "expo-router";
 
 export const defailtPizzaImage =
   "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/extravaganzza.png";
@@ -16,8 +16,10 @@ const detailsScreen = () => {
 };
 
 const ProductListItem = ({ product }: ProductListItemProps) => {
+  const segments = useSegments();
+  console.log(segments);
   return (
-    <Link href={`menu/${product.id}`} asChild>
+    <Link href={`/${segments[0]}/menu/${product.id}`} asChild>
       <Pressable style={styles.container}>
         <Image
           source={{ uri: product.image || defailtPizzaImage }}
