@@ -13,6 +13,7 @@ const sizes: PizzaSize[] = ["S", "M", "L", "XL"];
 
 const ProductDetailsScrren = () => {
   const { id } = useLocalSearchParams();
+
   const { addItem } = useCart();
   const [selectedSize, setSelectedSize] = useState<PizzaSize>("L");
 
@@ -36,7 +37,7 @@ const ProductDetailsScrren = () => {
         options={{
           title: product.name,
           headerRight: () => (
-            <Link href="/" asChild>
+            <Link href={`/(admin)/menu/create?id=${id}`} asChild>
               <Pressable>
                 {({ pressed }) => (
                   <FontAwesome

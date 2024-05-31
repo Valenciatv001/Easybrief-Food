@@ -1,6 +1,6 @@
-import { StyleSheet, Text, TextInput, View, Image } from "react-native";
+import { StyleSheet, Text, TextInput, View, Image, Alert } from "react-native";
 import React, { useState } from "react";
-import { router, Tabs } from "expo-router";
+import { router, Tabs, useLocalSearchParams } from "expo-router";
 import { Colors } from "@/src/constants/Colors";
 import Button from "@/src/components/Button";
 import { defailtPizzaImage } from "@/src/components/ProductListItem";
@@ -12,11 +12,18 @@ const CreateProductScreen = () => {
   const [errors, setErrors] = useState("");
   const [image, setImage] = useState<string | null>(null);
 
+  const { id: idString } = useLocalSearchParams();
+  const isUpdating = !!idString;
+
+  console.log(isUpdating);
+
+  //   reset field
   const resetFields = () => {
     setName("");
     setPrice("");
   };
 
+  //   validate input data
   const validateInput = () => {
     setErrors("");
     if (!name) {
@@ -34,21 +41,68 @@ const CreateProductScreen = () => {
     return true;
   };
 
+  // on submit
+
+  const onSubmit = () => {
+    if (isUpdating) {
+      // update
+      onUpdate();
+    } else {
+      onCreate();
+    }
+  };
+
+  //   on create cart
   const onCreate = async () => {
     if (!validateInput()) {
       return;
     }
-    console.warn(`Creating product:  `, name, price);
+    console.warn(`Creating product:  `, image, name, price);
 
     // Save in the database
     resetFields();
   };
 
+  //on update cart
+  const onUpdate = async () => {
+    if (!validateInput()) {
+      return;
+    }
+    console.warn(`Creating product:  `, name, price);
+    resetFields();
+  };
+
+  // delete cart produtcs
+
+  const onDelete = () => {
+    // deleteProduct(id, {
+    //   onSuccess: () => {
+    resetFields();
+    router.replace("/(admin)");
+    //   },
+    // });
+  };
+
+  //   delete products
+  const confirmDelete = () => {
+    Alert.alert("Confirm", "Are you sure you want to delete this product", [
+      {
+        text: "Cancel",
+      },
+      {
+        text: "Delete",
+        style: "destructive",
+        onPress: onDelete,
+      },
+    ]);
+  };
+
+  // select image from device library
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
+      allowsEditing: false,
       aspect: [4, 3],
       quality: 1,
     });
@@ -57,7 +111,7 @@ const CreateProductScreen = () => {
       setImage(result.assets[0].uri);
     }
   };
-  const isUpdating = !!String;
+
   return (
     <View style={styles.container}>
       <Tabs.Screen
@@ -92,7 +146,9 @@ const CreateProductScreen = () => {
         keyboardType="numeric"
       />
       <Text style={{ color: "red" }}>{errors}</Text>
-      <Button onPress={onCreate} text={isUpdating ? "Update" : "Create"} />
+      <Button onPress={onSubmit} text={isUpdating ? "Update" : "Create"} />
+      {/* <Button onPress={confirmDelete} text={"Delete"} /> */}
+      {isUpdating && <Button onPress={confirmDelete} text={"Delete"} />}
     </View>
   );
 };
@@ -127,5 +183,11 @@ const styles = StyleSheet.create({
   label: {
     color: "gray",
     fontSize: 16,
+  },
+  button: {
+    alignSelf: "center",
+    fontWeight: "bold",
+    color: Colors.dark.text,
+    marginVertical: 10,
   },
 });
